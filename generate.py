@@ -115,7 +115,7 @@ bank_transactions = {
     "method_id": [],
 }
 
-bank_transactions_len = 5
+bank_transactions_len = 50
 
 bank_transactions["id"] = [
     str(uuid.UUID(int=random.getrandbits(128), version=4))
@@ -165,6 +165,9 @@ for transactionIndex in range(0, bank_transactions_len):
             for client_id in bank_cards["client_id"]
             if client_id == account_client_id
         ]
+        if len(client_cards) == 0:
+            bank_transactions["method"] = "pix"
+            bank_transactions["method_id"] = fake.cpf()
         method_id = random.choice(client_cards)
 
     bank_transactions["method_id"].insert(transactionIndex, method_id)
